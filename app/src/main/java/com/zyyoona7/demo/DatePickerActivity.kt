@@ -3,15 +3,11 @@ package com.zyyoona7.demo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDatePickerBinding
-import com.zyyoona7.demo.utils.vibrateShot
-import com.zyyoona7.picker.listener.OnDateSelectedListener
 import com.zyyoona7.wheel.WheelView
 import com.zyyoona7.wheel.adapter.ArrayWheelAdapter
 import com.zyyoona7.wheel.formatter.IntTextFormatter
-import com.zyyoona7.wheel.listener.OnItemPositionChangedListener
 import com.zyyoona7.wheel.listener.OnItemSelectedListener
 import java.util.*
 
@@ -29,26 +25,12 @@ class DatePickerActivity : BaseActivity<ActivityDatePickerBinding>() {
     }
 
     override fun initVariables(savedInstanceState: Bundle?) {
-//        binding.wheelYear.setTextFormatter(IntTextFormatter("公元%d年"))
-//        binding.wheelMonth.setTextFormatter(IntTextFormatter("%d月"))
-//        binding.wheelDay.setTextFormatter(IntTextFormatter("%d日"))
-//
-//        binding.datePicker1.setRightText("年","月","日")
-//        binding.datePicker2.setRightTextMarginLeft(10f)
+        binding.wheelYear.setTextFormatter(IntTextFormatter("公元%d年"))
+        binding.wheelMonth.setTextFormatter(IntTextFormatter("%d月"))
+        binding.wheelDay.setTextFormatter(IntTextFormatter("%d日"))
 
-        binding.datePicker4.setYearRange(2020, 2025)
-        binding.datePicker4.setSelectedDate(Calendar.getInstance())
-        binding.datePicker4.setOnDateSelectedListener(object : OnDateSelectedListener {
-            override fun onDateSelected(
-                year: Int,
-                month: Int,
-                day: Int,
-                date: Date
-            ) {
-                Log.d("LATTE", "onDateSelected: year=$year, month=$month, day=$day")
-                vibrateShot(10)
-            }
-        })
+        binding.datePicker1.setRightText("年","月","日")
+        binding.datePicker2.setRightTextMarginLeft(10f)
 
         binding.datePicker5.setMaxSelectedDate(Calendar.getInstance(),WheelView.OverRangeMode.HIDE_ITEM)
     }
