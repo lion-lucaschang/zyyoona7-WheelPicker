@@ -22,14 +22,20 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
         fun newInstance(year: Int, month: Int, day: Int): DatePickerDialogFragment {
             return DatePickerDialogFragment()
-                    .apply {
-                        val bundle = Bundle()
-                        bundle.putInt(KEY_YEAR, year)
-                        bundle.putInt(KEY_MONTH, month)
-                        bundle.putInt(KEY_DAY, day)
-                        arguments = bundle
-                    }
+                .apply {
+                    val bundle = Bundle()
+                    bundle.putInt(KEY_YEAR, year)
+                    bundle.putInt(KEY_MONTH, month)
+                    bundle.putInt(KEY_DAY, day)
+                    arguments = bundle
+                }
         }
+    }
+
+    private var dateSelectedListener: OnDateSelectedListener? = null
+
+    fun setOnDateSelectedListener(listener: OnDateSelectedListener) {
+        this.dateSelectedListener = listener
     }
 
     override fun initLayoutId(): Int {
@@ -62,14 +68,18 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
         val endCalendar = Calendar.getInstance()
         endCalendar.set(
-                currentYear - 18,
-                tempCalendar.get(Calendar.MONTH),
-                tempCalendar.get(Calendar.DAY_OF_MONTH)
+            currentYear - 18,
+            tempCalendar.get(Calendar.MONTH),
+            tempCalendar.get(Calendar.DAY_OF_MONTH)
         )
         endCalendar.add(Calendar.DAY_OF_MONTH, -1)
 
         binding.datePicker.setYearRange(startYear, currentYear)
-        binding.datePicker.setDateRange(startCalendar, endCalendar, WheelView.OverRangeMode.HIDE_ITEM)
+        binding.datePicker.setDateRange(
+            startCalendar,
+            endCalendar,
+            WheelView.OverRangeMode.HIDE_ITEM
+        )
         binding.datePicker.setSelectedDate(endCalendar)
     }
 
@@ -77,18 +87,24 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
         binding.datePicker.setOnDateSelectedListener(object : OnDateSelectedListener {
             override fun onDateSelected(year: Int, month: Int, day: Int, date: Date) {
-//                getDialogListener(OnDateSelectedListener::class.java)
-//                        ?.onDateSelected(year, month, day, date)
                 Log.d("DatePickerDF", "selectedDate:$year-$month-$day")
             }
         })
 
         binding.okButton.setOnClickListener {
             getDialogListener(OnDateSelectedListener::class.java)
-                    ?.onDateSelected(binding.datePicker.getSelectedYear(),
-                            binding.datePicker.getSelectedMonth(),
-                            binding.datePicker.getSelectedDay(),
-                            binding.datePicker.getSelectedDate())
+                ?.onDateSelected(
+                    binding.datePicker.getSelectedYear(),
+                    binding.datePicker.getSelectedMonth(),
+                    binding.datePicker.getSelectedDay(),
+                    binding.datePicker.getSelectedDate()
+                )
+            dateSelectedListener?.onDateSelected(
+                binding.datePicker.getSelectedYear(),
+                binding.datePicker.getSelectedMonth(),
+                binding.datePicker.getSelectedDay(),
+                binding.datePicker.getSelectedDate()
+            )
             dismissAllowingStateLoss()
         }
 
