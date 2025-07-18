@@ -3,6 +3,7 @@ package com.zyyoona7.demo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
 import com.zyyoona7.demo.dialogfragment.DatePickerDialogFragment
@@ -84,8 +85,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
         }
 
         binding.btnDatePickerDf.setOnClickListener {
-            val datePickerFragment =
-                DatePickerDialogFragment.newInstance(currentYear, currentMonth, currentDay)
+            val datePickerFragment = DatePickerDialogFragment.newInstance()
             datePickerFragment.setOnFragmentReadyListener {
                 val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
                 val endCalendar = Calendar.getInstance().apply { set(2030, 11, 30) }
@@ -107,6 +107,17 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                 }
             }
             datePickerFragment.show(supportFragmentManager, "DatePicker")
+            datePickerFragment.setOnDateSelectedListener(object : OnDateSelectedListener {
+                override fun onDateSelected(
+                    year: Int,
+                    month: Int,
+                    day: Int,
+                    date: Date
+                ) {
+                    Log.d("DatePickerAct", "selectedDate:$year-$month-$day")
+                }
+
+            })
         }
 
         binding.btnLinkagePickerDf.setOnClickListener {
