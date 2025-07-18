@@ -6,13 +6,10 @@ import android.view.View
 import com.zyyoona7.demo.R
 import com.zyyoona7.demo.databinding.DfDatePickerBinding
 import com.zyyoona7.picker.listener.OnDateSelectedListener
-import com.zyyoona7.wheel.WheelView
 import java.util.Calendar
 import java.util.Date
 
 class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
-
-    val datePicker get() = binding.datePicker
 
     private var year: Int = -1
     private var month: Int = -1
@@ -37,7 +34,10 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
     }
 
     private var fragmentReadyListener: (() -> Unit)? = null
+
     private var dateSelectedListener: OnDateSelectedListener? = null
+
+    val datePicker get() = binding.datePicker
 
     fun setOnFragmentReadyListener(listener: () -> Unit) {
         this.fragmentReadyListener = listener
@@ -68,28 +68,6 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
         if (day != -1) {
             calendar.set(Calendar.DAY_OF_MONTH, day)
         }
-        val tempCalendar = Calendar.getInstance()
-
-        val currentYear = tempCalendar.get(Calendar.YEAR)
-        val startYear = if (currentYear - 100 <= 0) 1 else currentYear - 100
-        val startCalendar = Calendar.getInstance()
-        startCalendar.set(startYear, 0, 1)
-
-        val endCalendar = Calendar.getInstance()
-        endCalendar.set(
-            currentYear - 18,
-            tempCalendar.get(Calendar.MONTH),
-            tempCalendar.get(Calendar.DAY_OF_MONTH)
-        )
-        endCalendar.add(Calendar.DAY_OF_MONTH, -1)
-
-        binding.datePicker.setYearRange(startYear, currentYear)
-        binding.datePicker.setDateRange(
-            startCalendar,
-            endCalendar,
-            WheelView.OverRangeMode.HIDE_ITEM
-        )
-        binding.datePicker.setSelectedDate(endCalendar)
     }
 
     override fun initListeners(savedInstanceState: Bundle?) {
