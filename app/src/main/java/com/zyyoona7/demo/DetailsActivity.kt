@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
 import com.zyyoona7.demo.dialogfragment.DatePickerDialogFragment
+import com.zyyoona7.demo.dialogfragment.DateTimePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.LinkagePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.demo.entities.City
@@ -58,7 +59,28 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
         }
 
         binding.btnLinkagePicker.setOnClickListener {
-            LinkagePickerActivity.start(this)
+            val datePickerFragment = DateTimePickerDialogFragment.newInstance()
+            datePickerFragment.setOnFragmentReadyListener {
+                val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
+                val endCalendar = Calendar.getInstance().apply { set(2030, 11, 30) }
+
+                datePickerFragment.datePicker.setYearRange(
+                    startCalendar.get(Calendar.YEAR),
+                    endCalendar.get(Calendar.YEAR)
+                )
+                datePickerFragment.datePicker.setDateRange(
+                    startCalendar,
+                    endCalendar,
+                    WheelView.OverRangeMode.HIDE_ITEM
+                )
+
+                datePickerFragment.datePicker.post {
+                    datePickerFragment.datePicker.setSelectedDate(
+                        Calendar.getInstance().apply { set(2025, 4, 5) }
+                    )
+                }
+            }
+            datePickerFragment.show(supportFragmentManager, "DatePicker")
         }
 
         binding.btnDatePickerDf.setOnClickListener {
