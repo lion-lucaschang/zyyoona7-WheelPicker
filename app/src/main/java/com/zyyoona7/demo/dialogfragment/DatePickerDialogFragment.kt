@@ -83,7 +83,7 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
             }
         })
 
-        binding.tvConfirm.setOnClickListener {
+        binding.okButton.setOnClickListener {
             getDialogListener(OnDateSelectedListener::class.java)
                     ?.onDateSelected(binding.datePicker.getSelectedYear(),
                             binding.datePicker.getSelectedMonth(),
