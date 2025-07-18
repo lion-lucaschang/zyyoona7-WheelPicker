@@ -63,8 +63,13 @@ OnLinkageSelectedListener,OnTimeSelectedListener{
         }
 
         binding.btnDatePickerDf.setOnClickListener {
-            DatePickerDialogFragment.newInstance(currentYear,currentMonth,currentDay)
-                    .show(supportFragmentManager,"DatePicker")
+            val datePickerFragment = DatePickerDialogFragment.newInstance(currentYear, currentMonth, currentDay)
+            datePickerFragment.setOnFragmentReadyListener {
+                val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
+                val endCalendar = Calendar.getInstance().apply { set(2030, 11, 31) }
+                datePickerFragment.datePicker.setDateRange(startCalendar, endCalendar, WheelView.OverRangeMode.HIDE_ITEM)
+            }
+            datePickerFragment.show(supportFragmentManager, "DatePicker")
         }
 
         binding.btnLinkagePickerDf.setOnClickListener {

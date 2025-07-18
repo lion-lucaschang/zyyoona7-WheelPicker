@@ -2,13 +2,17 @@ package com.zyyoona7.demo.dialogfragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.zyyoona7.demo.R
 import com.zyyoona7.demo.databinding.DfDatePickerBinding
 import com.zyyoona7.picker.listener.OnDateSelectedListener
 import com.zyyoona7.wheel.WheelView
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
+
+    val datePicker get() = binding.datePicker
 
     private var year: Int = -1
     private var month: Int = -1
@@ -32,7 +36,12 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
         }
     }
 
+    private var fragmentReadyListener: (() -> Unit)? = null
     private var dateSelectedListener: OnDateSelectedListener? = null
+
+    fun setOnFragmentReadyListener(listener: () -> Unit) {
+        this.fragmentReadyListener = listener
+    }
 
     fun setOnDateSelectedListener(listener: OnDateSelectedListener) {
         this.dateSelectedListener = listener
@@ -111,5 +120,10 @@ class DatePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
         binding.tvCancel.setOnClickListener {
             dismissAllowingStateLoss()
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fragmentReadyListener?.invoke()
     }
 }
