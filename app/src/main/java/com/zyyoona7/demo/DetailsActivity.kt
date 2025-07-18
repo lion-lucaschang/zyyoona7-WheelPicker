@@ -87,6 +87,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
         binding.btnDatePickerDf.setOnClickListener {
             val datePickerFragment = DatePickerDialogFragment.newInstance()
             datePickerFragment.setOnFragmentReadyListener {
+                datePickerFragment.title = "請選擇出發日期"
                 val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
                 val endCalendar = Calendar.getInstance().apply { set(2030, 11, 30) }
 

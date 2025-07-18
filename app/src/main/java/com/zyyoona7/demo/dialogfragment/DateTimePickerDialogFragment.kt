@@ -21,6 +21,12 @@ class DateTimePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
     val datePicker get() = binding.datePicker
 
+    var title: String
+        get() = binding.title.text as String
+        set(value) {
+            binding.title.text = value
+        }
+
     fun setOnFragmentReadyListener(listener: () -> Unit) {
         this.fragmentReadyListener = listener
     }
