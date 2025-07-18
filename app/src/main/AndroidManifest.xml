@@ -27,6 +27,9 @@
         <activity android:name=".DatePickerActivity">
 
         </activity>
+        <activity android:name=".DateTimePickerActivity">
+
+        </activity>
         <activity android:name=".MainActivity">
         </activity>
     </application>

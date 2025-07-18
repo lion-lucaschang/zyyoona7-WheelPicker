@@ -210,6 +210,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/date_picker_6" />
+
+            <com.zyyoona7.picker.DateTimePickerView
+                android:id="@+id/date_time_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_picker_7"
+                app:dpv_curtainColor="#B3FFEFEF"
+                app:dpv_cyclic="true"
+                app:dpv_lineSpacing="15dp"
+                app:dpv_normalTextColor="#999999"
+                app:dpv_selectedTextColor="#F03742"
+                app:dpv_showCurtain="true"
+                app:dpv_textSize="16sp"
+                app:dpv_widthWeightMode="true" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 </layout>

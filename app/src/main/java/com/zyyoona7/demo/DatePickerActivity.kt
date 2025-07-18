@@ -3,12 +3,16 @@ package com.zyyoona7.demo
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDatePickerBinding
+import com.zyyoona7.picker.DateTimePickerView
+import com.zyyoona7.picker.WheelDateView
 import com.zyyoona7.wheel.WheelView
 import com.zyyoona7.wheel.adapter.ArrayWheelAdapter
 import com.zyyoona7.wheel.formatter.IntTextFormatter
 import com.zyyoona7.wheel.listener.OnItemSelectedListener
+import java.text.SimpleDateFormat
 import java.util.*
 
 class DatePickerActivity : BaseActivity<ActivityDatePickerBinding>() {
@@ -33,6 +37,13 @@ class DatePickerActivity : BaseActivity<ActivityDatePickerBinding>() {
         binding.datePicker2.setRightTextMarginLeft(10f)
 
         binding.datePicker5.setMaxSelectedDate(Calendar.getInstance(),WheelView.OverRangeMode.HIDE_ITEM)
+
+        binding.dateTimePicker.setOnDateTimeSelectedListener(object : DateTimePickerView.OnDateTimeSelectedListener{
+            override fun onDateTimeSelected(calendar: Calendar) {
+                val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault())
+                Log.d("LATTE", dateFormat.format(calendar.time))
+            }
+        })
     }
 
     override fun initListeners(savedInstanceState: Bundle?) {

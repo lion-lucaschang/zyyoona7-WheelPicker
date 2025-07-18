@@ -5,11 +5,15 @@ import android.util.Log
 import android.view.View
 import com.zyyoona7.demo.R
 import com.zyyoona7.demo.databinding.DfDatePickerBinding
+import com.zyyoona7.demo.databinding.DfDateTimePickerBinding
+import com.zyyoona7.picker.DateTimePickerView
 import com.zyyoona7.picker.listener.OnDateSelectedListener
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
-class DateTimePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
+class DateTimePickerDialogFragment : BaseDialogFragment<DfDateTimePickerBinding>() {
 
     companion object {
         fun newInstance(): DateTimePickerDialogFragment = DateTimePickerDialogFragment()
@@ -17,7 +21,7 @@ class DateTimePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
     private var fragmentReadyListener: (() -> Unit)? = null
 
-    private var dateSelectedListener: OnDateSelectedListener? = null
+    private var dateSelectedListener: DateTimePickerView.OnDateTimeSelectedListener? = null
 
     val datePicker get() = binding.datePicker
 
@@ -31,12 +35,12 @@ class DateTimePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
         this.fragmentReadyListener = listener
     }
 
-    fun setOnDateSelectedListener(listener: OnDateSelectedListener) {
+    fun setOnDateSelectedListener(listener: DateTimePickerView.OnDateTimeSelectedListener) {
         this.dateSelectedListener = listener
     }
 
     override fun initLayoutId(): Int {
-        return R.layout.df_date_picker
+        return R.layout.df_date_time_picker
     }
 
     override fun initVariables(savedInstanceState: Bundle?) {
@@ -44,26 +48,18 @@ class DateTimePickerDialogFragment : BaseDialogFragment<DfDatePickerBinding>() {
 
     override fun initListeners(savedInstanceState: Bundle?) {
 
-        binding.datePicker.setOnDateSelectedListener(object : OnDateSelectedListener {
-            override fun onDateSelected(year: Int, month: Int, day: Int, date: Date) {
-                Log.d("DatePickerDF", "selectedDate:$year-$month-$day")
+        binding.datePicker.setOnDateTimeSelectedListener(object :
+            DateTimePickerView.OnDateTimeSelectedListener {
+            override fun onDateTimeSelected(calendar: Calendar) {
+                val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault())
+                Log.d("LATTE", dateFormat.format(calendar.time))
             }
         })
 
         binding.okButton.setOnClickListener {
-            getDialogListener(OnDateSelectedListener::class.java)
-                ?.onDateSelected(
-                    binding.datePicker.getSelectedYear(),
-                    binding.datePicker.getSelectedMonth(),
-                    binding.datePicker.getSelectedDay(),
-                    binding.datePicker.getSelectedDate()
-                )
-            dateSelectedListener?.onDateSelected(
-                binding.datePicker.getSelectedYear(),
-                binding.datePicker.getSelectedMonth(),
-                binding.datePicker.getSelectedDay(),
-                binding.datePicker.getSelectedDate()
-            )
+            getDialogListener(DateTimePickerView.OnDateTimeSelectedListener::class.java)
+                ?.onDateTimeSelected(binding.datePicker.getDateTime())
+            dateSelectedListener?.onDateTimeSelected(binding.datePicker.getDateTime())
             dismissAllowingStateLoss()
         }
 

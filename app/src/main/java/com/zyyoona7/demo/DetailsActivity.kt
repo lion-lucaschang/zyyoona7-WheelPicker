@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.core.view.postDelayed
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
 import com.zyyoona7.demo.dialogfragment.DatePickerDialogFragment
@@ -11,6 +12,7 @@ import com.zyyoona7.demo.dialogfragment.DateTimePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.LinkagePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.demo.entities.City
+import com.zyyoona7.picker.DateTimePickerView
 import com.zyyoona7.picker.listener.OnDateSelectedListener
 import com.zyyoona7.picker.listener.OnLinkageSelectedListener
 import com.zyyoona7.picker.listener.OnTimeSelectedListener
@@ -60,28 +62,28 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
         }
 
         binding.btnLinkagePicker.setOnClickListener {
-            val datePickerFragment = DateTimePickerDialogFragment.newInstance()
-            datePickerFragment.setOnFragmentReadyListener {
-                val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
-                val endCalendar = Calendar.getInstance().apply { set(2030, 11, 30) }
+            DateTimePickerDialogFragment.newInstance().apply {
+                setOnFragmentReadyListener {
+                    this.title = "請選擇出發日期與時間"
+                    val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
+                    val endCalendar = Calendar.getInstance().apply { set(2030, 11, 30) }
 
-                datePickerFragment.datePicker.setYearRange(
-                    startCalendar.get(Calendar.YEAR),
-                    endCalendar.get(Calendar.YEAR)
-                )
-                datePickerFragment.datePicker.setDateRange(
-                    startCalendar,
-                    endCalendar,
-                    WheelView.OverRangeMode.HIDE_ITEM
-                )
+                    this.datePicker.setDateRange(startCalendar, endCalendar)
 
-                datePickerFragment.datePicker.post {
-                    datePickerFragment.datePicker.setSelectedDate(
-                        Calendar.getInstance().apply { set(2025, 4, 5) }
-                    )
+                    this.datePicker.postDelayed({
+                        this.datePicker.setSelectedDate(
+                            Calendar.getInstance().apply { set(2025, 4, 5, 1, 1) }
+                        )
+                    }, 200)
                 }
+                setOnDateSelectedListener(object : DateTimePickerView.OnDateTimeSelectedListener {
+                    override fun onDateTimeSelected(calendar: Calendar) {
+                        val dateFormat = SimpleDateFormat("yyyy/MM/dd HH:mm", Locale.getDefault())
+                        Log.d("LATTE", dateFormat.format(calendar.time))
+                    }
+                })
+                show(supportFragmentManager, "DatePicker")
             }
-            datePickerFragment.show(supportFragmentManager, "DatePicker")
         }
 
         binding.btnDatePickerDf.setOnClickListener {
