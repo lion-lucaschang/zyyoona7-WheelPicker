@@ -1,10 +1,10 @@
-package com.zyyoona7.demo.dialogfragment
+package com.zyyoona7.picker.dialogfragment
 
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.zyyoona7.demo.R
-import com.zyyoona7.demo.databinding.DfDatePickerBinding
+import com.zyyoona7.picker.R
+import com.zyyoona7.picker.databinding.DfDatePickerBinding
 import com.zyyoona7.picker.listener.OnDateSelectedListener
 import java.util.Calendar
 import java.util.Date

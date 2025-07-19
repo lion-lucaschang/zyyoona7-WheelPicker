@@ -7,8 +7,8 @@ import android.util.Log
 import androidx.core.view.postDelayed
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
-import com.zyyoona7.demo.dialogfragment.DatePickerDialogFragment
-import com.zyyoona7.demo.dialogfragment.DateTimePickerDialogFragment
+import com.zyyoona7.picker.dialogfragment.DatePickerDialogFragment
+import com.zyyoona7.picker.dialogfragment.DateTimePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.LinkagePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.demo.entities.City

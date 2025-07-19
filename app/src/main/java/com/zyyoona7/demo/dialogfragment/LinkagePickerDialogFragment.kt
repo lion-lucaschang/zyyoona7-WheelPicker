@@ -8,6 +8,7 @@ import com.zyyoona7.demo.R
 import com.zyyoona7.demo.databinding.DfLinkagePickerBinding
 import com.zyyoona7.demo.entities.City
 import com.zyyoona7.demo.utils.ParseHelper
+import com.zyyoona7.picker.dialogfragment.BaseDialogFragment
 import com.zyyoona7.picker.listener.OnLinkageSelectedListener
 import com.zyyoona7.wheel.WheelView
 

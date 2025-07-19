@@ -1,4 +1,4 @@
-package com.zyyoona7.demo.dialogfragment
+package com.zyyoona7.picker.dialogfragment
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -11,7 +11,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
-import com.zyyoona7.demo.R
+import com.zyyoona7.picker.R
 
 abstract class BaseDialogFragment<VB : ViewDataBinding> : DialogFragment() {
 
