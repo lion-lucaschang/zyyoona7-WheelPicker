@@ -64,31 +64,31 @@ class DatePickerHelper(private var wheelYearView: WheelYearView?,
                 wheelDayView?.year = selectedYear
                 when (selectedYear) {
                     minYear -> {
-                        wheelMonthView?.setSelectedMonthRange(minMonth, WheelMonthView.MAX_MONTH, mOverRangeMode)
+                        wheelMonthView?.post { wheelMonthView?.setSelectedMonthRange(minMonth, WheelMonthView.MAX_MONTH, mOverRangeMode) }
                         val selectedMonth = getSelectedMonth()
                         wheelDayView?.month = selectedMonth
                         if (selectedMonth == minMonth) {
                             wheelDayView?.let {
-                                it.setSelectedDayRange(minDay, it.getMaxDay(), mOverRangeMode)
+                                it.post { wheelDayView?.setSelectedDayRange(minDay, it.getMaxDay(), mOverRangeMode) }
                             }
                         } else {
-                            wheelDayView?.setSelectedDayRange(-1, -1)
+                            wheelDayView?.post { wheelDayView?.setSelectedDayRange(-1, -1) }
                         }
                     }
                     maxYear -> {
-                        wheelMonthView?.setSelectedMonthRange(WheelMonthView.MIN_MONTH, maxMonth, mOverRangeMode)
+                        wheelMonthView?.post { wheelMonthView?.setSelectedMonthRange(WheelMonthView.MIN_MONTH, maxMonth, mOverRangeMode) }
                         val selectedMonth = getSelectedMonth()
                         wheelDayView?.month = selectedMonth
                         if (selectedMonth == maxMonth) {
-                            wheelDayView?.setSelectedDayRange(WheelDayView.MIN_DAY, maxDay, mOverRangeMode)
+                            wheelDayView?.post { wheelDayView?.setSelectedDayRange(WheelDayView.MIN_DAY, maxDay, mOverRangeMode) }
                         } else {
-                            wheelDayView?.setSelectedDayRange(-1, -1)
+                            wheelDayView?.post { wheelDayView?.setSelectedDayRange(-1, -1) }
                         }
                     }
                     else -> {
                         wheelDayView?.month = getSelectedMonth()
-                        wheelMonthView?.setSelectedMonthRange(-1, -1)
-                        wheelDayView?.setSelectedDayRange(-1, -1)
+                        wheelMonthView?.post { wheelMonthView?.setSelectedMonthRange(-1, -1) }
+                        wheelDayView?.post { wheelDayView?.setSelectedDayRange(-1, -1) }
                     }
                 }
             }
@@ -101,12 +101,12 @@ class DatePickerHelper(private var wheelYearView: WheelYearView?,
                 //才限制选择 Day 的范围
                 if (selectedMonth == minMonth && selectedYear == minYear) {
                     wheelDayView?.let {
-                        it.setSelectedDayRange(minDay, it.getMaxDay(), mOverRangeMode)
+                        it.post { wheelDayView?.setSelectedDayRange(minDay, it.getMaxDay(), mOverRangeMode) }
                     }
                 } else if (selectedMonth == maxMonth && selectedYear == maxYear) {
-                    wheelDayView?.setSelectedDayRange(WheelDayView.MIN_DAY, maxDay, mOverRangeMode)
+                    wheelDayView?.post { wheelDayView?.setSelectedDayRange(WheelDayView.MIN_DAY, maxDay, mOverRangeMode) }
                 } else {
-                    wheelDayView?.setSelectedDayRange(-1, -1)
+                    wheelDayView?.post { wheelDayView?.setSelectedDayRange(-1, -1) }
                 }
             }
             else -> {
