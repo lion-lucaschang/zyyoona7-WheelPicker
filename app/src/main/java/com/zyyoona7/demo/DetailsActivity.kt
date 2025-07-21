@@ -122,7 +122,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                 }
 
             })
-            datePickerFragment.onOutsideTouchListener = object : OutsideRealDialog.OnTouchOutsideListener,
+            datePickerFragment.onDismissClickListener = object : OutsideRealDialog.OnTouchOutsideListener,
                     () -> Unit {
                 override fun onTouchOutside(
                     p0: OutsideRealDialog?,

@@ -2,12 +2,10 @@ package com.zyyoona7.picker.dialogfragment
 
 import androidx.viewbinding.ViewBinding
 import android.graphics.Color
-import android.graphics.Rect
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
@@ -44,28 +42,22 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
         dialog?.setCancelable(false)
     }
 
-    var onOutsideTouchListener: (() -> Unit)? = null
+    var onDismissClickListener: (() -> Unit)? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val type = javaClass.genericSuperclass
         val clazz = (type as ParameterizedType).actualTypeArguments[0] as Class<VB>
         val method = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
         binding = method.invoke(null, inflater, container, false) as VB
-        dialog?.window?.decorView?.setOnTouchListener { v, event ->
-            if (event.action == MotionEvent.ACTION_DOWN) {
-                val x = event.x.toInt()
-                val y = event.y.toInt()
-                val dialogView = binding.root
-                val rect = Rect()
-                dialogView.getGlobalVisibleRect(rect)
-                if (!rect.contains(x, y)) {
-                    onOutsideTouchListener?.invoke()
-                    return@setOnTouchListener true
-                }
-            }
-            false
-        }
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.setCanceledOnTouchOutside(true)
+        dialog?.setOnCancelListener {
+            onDismissClickListener?.invoke()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
