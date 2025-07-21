@@ -5,16 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import androidx.core.view.postDelayed
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
 import com.zyyoona7.picker.dialogfragment.DatePickerDialogFragment
 import com.zyyoona7.picker.dialogfragment.DateTimePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.LinkagePickerDialogFragment
-import com.zyyoona7.demo.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.demo.entities.City
 import com.zyyoona7.dialog.dialog.OutsideRealDialog
 import com.zyyoona7.picker.DateTimePickerView
+import com.zyyoona7.picker.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.picker.listener.OnDateSelectedListener
 import com.zyyoona7.picker.listener.OnLinkageSelectedListener
 import com.zyyoona7.picker.listener.OnTimeSelectedListener
@@ -145,7 +144,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
         }
 
         binding.btnTimePickerDf.setOnClickListener {
-            TimePickerDialogFragment.newInstance(hour, minute, second, is24Hour, isAm)
+            TimePickerDialogFragment.newInstance()
                 .show(supportFragmentManager, "TimePicker")
         }
     }
