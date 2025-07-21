@@ -9,6 +9,7 @@ import com.zyyoona7.picker.ex.WheelHourView
 import com.zyyoona7.picker.ex.WheelMinuteView
 import com.zyyoona7.wheel.WheelView
 import com.zyyoona7.wheel.adapter.ArrayWheelAdapter
+import com.zyyoona7.wheel.formatter.IntTextFormatter
 import com.zyyoona7.wheel.listener.OnItemSelectedListener
 import java.util.Calendar
 
@@ -35,6 +36,9 @@ class DateTimePickerView @JvmOverloads constructor(
         wheelDateView = WheelDateView(context)
         wheelHourView = WheelHourView(context)
         wheelMinuteView = WheelMinuteView(context)
+
+        wheelHourView.setTextFormatter(IntTextFormatter("%02d"))
+        wheelMinuteView.setTextFormatter(IntTextFormatter("%02d"))
 
         wheelDateView.setOnItemSelectedListener(this)
         wheelHourView.setOnItemSelectedListener(this)
