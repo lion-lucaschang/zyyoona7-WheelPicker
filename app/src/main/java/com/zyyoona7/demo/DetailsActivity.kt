@@ -84,13 +84,15 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                     }
                 })
                 show(supportFragmentManager, "DatePicker")
-                setOnDismissClickListener {
-                    Toast.makeText(
-                        this@DetailsActivity,
-                        "onDismiss",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+                setOnDismissClickListener(object : PopupWindow.OnDismissListener {
+                    override fun onDismiss() {
+                        Toast.makeText(
+                            this@DetailsActivity,
+                            "onDismiss",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
             }
         }
 
@@ -129,13 +131,15 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                 }
 
             })
-            datePickerFragment.setOnDismissClickListener {
-                Toast.makeText(
-                    this@DetailsActivity,
-                    "onDismiss",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+            datePickerFragment.setOnDismissClickListener(object : PopupWindow.OnDismissListener {
+                override fun onDismiss() {
+                    Toast.makeText(
+                        this@DetailsActivity,
+                        "onDismiss",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            })
         }
 
         binding.btnLinkagePickerDf.setOnClickListener {
@@ -145,6 +149,25 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
 
         binding.btnTimePickerDf.setOnClickListener {
             TimePickerDialogFragment.newInstance()
+                .apply {
+                    setOnFragmentReadyListener {
+                        this.timePicker.postDelayed({
+                            this.timePicker.setTime(
+                                Calendar.getInstance().apply { set(2025, 4, 5, 13, 13) },
+                                true
+                            )
+                        }, 200)
+                    }
+                    setOnDismissClickListener(object : PopupWindow.OnDismissListener {
+                        override fun onDismiss() {
+                            Toast.makeText(
+                                this@DetailsActivity,
+                                "onDismiss",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+                }
                 .show(supportFragmentManager, "TimePicker")
         }
     }

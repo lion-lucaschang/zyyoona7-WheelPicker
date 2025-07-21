@@ -69,7 +69,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
     override fun onStart() {
         super.onStart()
         dialog?.setCanceledOnTouchOutside(true)
-        dialog?.setOnCancelListener {
+        dialog?.setOnDismissListener {
             onDismissClickListener?.onDismiss()
         }
     }
