@@ -53,6 +53,7 @@
             app:dpv_normalTextColor="#999999"
             app:dpv_selectedTextColor="#F03742"
             app:dpv_showCurtain="true"
+            app:dpv_visibleItems="6"
             app:dpv_textSize="16sp"
             app:dpv_widthWeightMode="true"
             app:layout_constraintEnd_toEndOf="parent"
