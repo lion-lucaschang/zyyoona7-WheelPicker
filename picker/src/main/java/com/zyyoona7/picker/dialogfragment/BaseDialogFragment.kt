@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupWindow
 import androidx.annotation.LayoutRes
 import java.lang.reflect.ParameterizedType
 import androidx.fragment.app.DialogFragment
@@ -42,12 +43,25 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
         dialog?.setCancelable(false)
     }
 
-    var onDismissClickListener: (() -> Unit)? = null
+    private var onDismissClickListener: PopupWindow.OnDismissListener? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    fun setOnDismissClickListener(listener: PopupWindow.OnDismissListener) {
+        onDismissClickListener = listener
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val type = javaClass.genericSuperclass
         val clazz = (type as ParameterizedType).actualTypeArguments[0] as Class<VB>
-        val method = clazz.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
+        val method = clazz.getMethod(
+            "inflate",
+            LayoutInflater::class.java,
+            ViewGroup::class.java,
+            Boolean::class.java
+        )
         binding = method.invoke(null, inflater, container, false) as VB
         return binding.root
     }
@@ -56,7 +70,7 @@ abstract class BaseDialogFragment<VB : ViewBinding> : DialogFragment() {
         super.onStart()
         dialog?.setCanceledOnTouchOutside(true)
         dialog?.setOnCancelListener {
-            onDismissClickListener?.invoke()
+            onDismissClickListener?.onDismiss()
         }
     }
 

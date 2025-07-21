@@ -4,14 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.MotionEvent
+import android.widget.PopupWindow
+import android.widget.Toast
 import com.zyyoona7.demo.activity.BaseActivity
 import com.zyyoona7.demo.databinding.ActivityDetailsBinding
 import com.zyyoona7.picker.dialogfragment.DatePickerDialogFragment
 import com.zyyoona7.picker.dialogfragment.DateTimePickerDialogFragment
 import com.zyyoona7.demo.dialogfragment.LinkagePickerDialogFragment
 import com.zyyoona7.demo.entities.City
-import com.zyyoona7.dialog.dialog.OutsideRealDialog
 import com.zyyoona7.picker.DateTimePickerView
 import com.zyyoona7.picker.dialogfragment.TimePickerDialogFragment
 import com.zyyoona7.picker.listener.OnDateSelectedListener
@@ -84,6 +84,13 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                     }
                 })
                 show(supportFragmentManager, "DatePicker")
+                setOnDismissClickListener {
+                    Toast.makeText(
+                        this@DetailsActivity,
+                        "onDismiss",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
         }
 
@@ -122,19 +129,12 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
                 }
 
             })
-            datePickerFragment.onDismissClickListener = object : OutsideRealDialog.OnTouchOutsideListener,
-                    () -> Unit {
-                override fun onTouchOutside(
-                    p0: OutsideRealDialog?,
-                    p1: MotionEvent?
-                ): Boolean {
-                    p0?.dismiss()
-                    return false
-                }
-
-                override fun invoke() {
-                }
-
+            datePickerFragment.setOnDismissClickListener {
+                Toast.makeText(
+                    this@DetailsActivity,
+                    "onDismiss",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
