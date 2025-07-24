@@ -327,7 +327,6 @@ class DatePickerHelper(private var wheelYearView: WheelYearView?,
     }
 
     override fun setCyclic(isCyclic: Boolean) {
-        wheelYearView?.isCyclic = isCyclic
         wheelMonthView?.isCyclic = isCyclic
         wheelDayView?.isCyclic = isCyclic
     }
