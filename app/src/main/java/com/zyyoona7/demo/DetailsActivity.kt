@@ -100,7 +100,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
             val datePickerFragment = DatePickerDialogFragment.newInstance()
             datePickerFragment.setOnFragmentReadyListener {
                 datePickerFragment.title = "請選擇出發日期"
-                val startCalendar = Calendar.getInstance().apply { set(2000, 0, 1) }
+                val startCalendar = Calendar.getInstance().apply { set(2024, 4, 15) }
                 val endCalendar = Calendar.getInstance().apply { set(2025, 10, 15) }
 
                 datePickerFragment.datePicker.setYearRange(
@@ -115,7 +115,7 @@ class DetailsActivity : BaseActivity<ActivityDetailsBinding>(), OnDateSelectedLi
 
                 datePickerFragment.datePicker.post {
                     datePickerFragment.datePicker.setSelectedDate(
-                        Calendar.getInstance().apply { set(2025, 4, 5) }
+                        Calendar.getInstance().apply { set(2024, 4, 15) }
                     )
                 }
             }
