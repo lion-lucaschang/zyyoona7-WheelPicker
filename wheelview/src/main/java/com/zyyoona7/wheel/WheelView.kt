@@ -921,6 +921,7 @@ open class WheelView @JvmOverloads constructor(context: Context,
         attrs?.let {
             initAttrsAndDefault(context, it)
         }
+        mainTextPaint.setSansSerifMedium()
     }
 
     override fun onDetachedFromWindow() {
